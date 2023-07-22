@@ -16,4 +16,16 @@ export const listUsers = async (req : Request, res : Response) => {
     }
 }
 
+export const editUser = async (req : Request, res : Response) => {
+    try {
+        const { _id } = req.body
+        let user = await userModel.findOneAndUpdate({_id}, req.body)
+            if(user) {
+                res.status(200).send(user)
+            }
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Server Error')
+    }
+}
 

@@ -3,7 +3,7 @@ const router = Router()
 
 
 //users
-import { listUsers } from '../../controller/users'
+import { editUser, listUsers } from '../../controller/users'
 
 //auth
 import { Auth, Login, currentUser, registerUser } from "../../controller/auth"
@@ -14,6 +14,8 @@ router.get('/', Auth, listUsers)
 router.get('/test', Auth, listUsers)
 
 router.get('/currentUser', Auth, currentUser)
+
+router.post('/editUser', Auth, editUser)
 
 router.post('/register', registerUser)
 

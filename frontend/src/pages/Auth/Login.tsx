@@ -10,8 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 
-import { userLogin } from "../../redux/slices/userSlice";
-
 interface loginUser {
     email : string
     password : string
@@ -40,21 +38,15 @@ const Login = () => {
 
             let dataUser = JSON.stringify({
                 "isLogin" : true,
-                "token" : response.data.token,
-                ...response.data.data.user
+                "token" : response.data.token
             })
 
 
             localStorage.setItem("userinfo", dataUser)
 
-            let userData = {
-              "isLogin" : JSON.parse(localStorage.userinfo).isLogin,
-              "isAdmin" : JSON.parse(localStorage.userinfo).isAdmin,
-              "email" : JSON.parse(localStorage.userinfo).email
-            }
+            toast.success(`เข้าสู่ระบบสำเร็จ`)
             
-            dispatch(userLogin(userData))
-            navigate('/')
+            setTimeout((() => navigate('/')), 2000)
           }
         })
         

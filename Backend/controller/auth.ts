@@ -56,19 +56,11 @@ export const Login = async (req : Request<{}, {}, loginUser>, res : Response) =>
                 }
             }
 
-            const result = {
-                user : {
-                    email : user.email,
-                    isAdmin : user.isAdmin
-                }
-            }
-
             jwt.sign(payload, `${process.env.jwt}`, { expiresIn: 3600 }, (err, token) => {
                 if(err) throw err
                 res.status(200).json({
                     message: "success",
-                    token: token,
-                    data: result
+                    token: token
                 })
             })
         } else {
