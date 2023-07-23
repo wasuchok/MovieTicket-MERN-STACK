@@ -6,14 +6,18 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 //Components
 import Navbar from "./components/Navbar";
 
-//Pages
+//Components Admin
+import SidebarAdmin from "./components/SidebarAdmin";
+
+//Pages Users
 import Register from "./pages/Auth/Register";
 import Login from "./pages/Auth/Login";
 import Home from "./pages/Home/Home";
 import EditUser from "./pages/Home/EditUser";
 
-//React
-import { useEffect } from "react";
+//Pages Admin
+import AdminIndex from './pages/Admin/Index'
+import ManageUser from "./pages/Admin/ManageUser";
 
 //Redux
 import { useDispatch } from "react-redux";
@@ -24,6 +28,8 @@ import { userLogin } from "./redux/slices/userSlice";
 //utils
 import ProtectedRoute from "./utils/ProtectedRoute";
 import ProtectedLogin from "./utils/ProtectedLogin";
+import ProtectedAdminRoute from "./utils/ProtectedAdminRoute";
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -39,7 +45,7 @@ const App = () => {
         })
         .then((response) => {
           if(response.status == 200) {
-            dispatch(userLogin({...response.data, "isLogin" : true}))
+            dispatch(userLogin({...response.data}))
           }
         });
     } catch (err: any) {
@@ -57,22 +63,16 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
     if (localStorage.userinfo) {
-      const userData = {
-        isLogin: JSON.parse(localStorage.userinfo).isLogin,
-        isAdmin: JSON.parse(localStorage.userinfo).isAdmin,
-        email: JSON.parse(localStorage.userinfo).email,
-      };
-      currentUser(JSON.parse(localStorage.userinfo).token);
-      dispatch(userLogin(userData));
+      currentUser(localStorage.userinfo);
     }
-  }, [currentUser]);
+
   return (
     <>
       <Navbar />
       <div className="mt-20">
         <Routes>
+         {/* Start Route User */}
           <Route
             path="/register"
             element={
@@ -106,6 +106,36 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+
+          {/* End Route User */}
+
+          {/* Start Route Admin */}
+
+          <Route
+            path="/admin/"
+            element={
+              <ProtectedAdminRoute>
+                <div className="flex">
+                <SidebarAdmin />
+                <AdminIndex />
+                </div>
+              </ProtectedAdminRoute>
+            }
+          />
+
+          <Route
+            path="/admin/manageusers"
+            element={
+              <ProtectedAdminRoute>
+                <div className="flex">
+                <SidebarAdmin />
+                <ManageUser />
+                </div>
+              </ProtectedAdminRoute>
+            }
+          />
+
+          {/* End Route Admin */}
         </Routes>
       </div>
     </>

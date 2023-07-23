@@ -72,7 +72,7 @@ export const Login = async (req : Request<{}, {}, loginUser>, res : Response) =>
     }
 }
 
-export const Auth = async (req: any, res: Response, next: NextFunction) => {
+export const Auth = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const token = req.headers['authtoken'];
   
@@ -82,7 +82,7 @@ export const Auth = async (req: any, res: Response, next: NextFunction) => {
   
       const decoded = jwt.verify(`${token}`, `${process.env.jwt}`) as { user: User };
 
-      req.user1  = decoded.user;
+      req.body.user1  = decoded.user;
       next();
     } catch (err) {
       console.log(err);
@@ -90,9 +90,23 @@ export const Auth = async (req: any, res: Response, next: NextFunction) => {
     }
 };
 
-export const currentUser = async (req: any, res: Response) => {
+export const CheckAdmin = async (req : Request, res: Response, next: NextFunction) => {
     try {
-        const user = await userModel.findOne({ _id : req.user1._id }).select("-password")
+        let user = await userModel.findOne({ _id : req.body.user1._id })
+        if(user && user.isAdmin) {
+            next()
+        } else {
+            res.status(403).send('Admin Access Denied')
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server Error');
+    }
+}
+
+export const currentUser = async (req: Request, res: Response) => {
+    try {
+        const user = await userModel.findOne({ _id : req.body.user1._id }).select("-password")
         if(user) {
             res.status(200).send(user)
         }

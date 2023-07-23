@@ -3,19 +3,26 @@ const router = Router()
 
 
 //users
-import { editUser, listUsers } from '../../controller/users'
+import { deleteUser, editUser, listUsers, readUser } from '../../controller/users'
 
 //auth
-import { Auth, Login, currentUser, registerUser } from "../../controller/auth"
+import { Auth, CheckAdmin, Login, currentUser, registerUser } from "../../controller/auth"
 
 
-router.get('/', Auth, listUsers)
+//Users
 
-router.get('/test', Auth, listUsers)
+router.get('/', Auth, CheckAdmin, listUsers)
 
 router.get('/currentUser', Auth, currentUser)
 
 router.post('/editUser', Auth, editUser)
+
+router.post('/readUser', Auth, CheckAdmin, readUser)
+
+router.post('/deleteUser', Auth, CheckAdmin, deleteUser)
+
+
+//Auth
 
 router.post('/register', registerUser)
 

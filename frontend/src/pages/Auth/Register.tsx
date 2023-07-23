@@ -68,12 +68,9 @@ const Register = () => {
   };
 
   useEffect(() => {
-    const userLocalStorage: any = localStorage.getItem("userinfo");
-    const userinfo : any = JSON.parse(userLocalStorage);
+    const userLocalStorage = localStorage.userinfo
     if(userLocalStorage) {
-      if(userinfo.isLogin) {
         navigate("/")
-      }
     }
   },[])
 

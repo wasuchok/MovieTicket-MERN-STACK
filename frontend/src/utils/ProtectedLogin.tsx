@@ -1,17 +1,16 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { Navigate } from 'react-router-dom'
 
+interface ProtectedTypes {
+    children : ReactNode
+}
 
-
-const ProtectedLogin : React.FC<any> = ({ children }) => {
+const ProtectedLogin : React.FC<ProtectedTypes> = ({ children }) => {
     const userLocalStorage: any = localStorage.getItem("userinfo");
-    const userinfo: any = JSON.parse(userLocalStorage);
 
     if(userLocalStorage) {
-        if(userinfo.isLogin) {
             return <Navigate  to="/" />
-        }
     }
 
     return children

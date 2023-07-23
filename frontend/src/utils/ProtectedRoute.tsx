@@ -1,18 +1,19 @@
-import React from 'react'
+import { useSelector } from "react-redux"
+import LoadingToRedirect from "./LoadingToRedirect"
+import React from "react"
+import { RootState } from "../redux/store"
+import { ReactNode } from 'react'
 
-import { Navigate } from 'react-router-dom'
+interface ProtectedTypes {
+  children : ReactNode
+}
+
+const ProtectedRoute : React.FC<ProtectedTypes> = ({ children }) => {
+
+    const { userinfo } = useSelector((state : RootState) => (state.user))
 
 
-
-const ProtectedRoute : React.FC<any> = ({ children }) => {
-    const userLocalStorage: any = localStorage.getItem("userinfo");
-    const userinfo: any = JSON.parse(userLocalStorage);
-    if(userLocalStorage) {
-        if(userinfo.isLogin) {
-            return children
-        }
-    }
-    return <Navigate  to="/login" />
+  return userinfo && localStorage.userinfo ? children : <LoadingToRedirect />
 }
 
 export default ProtectedRoute

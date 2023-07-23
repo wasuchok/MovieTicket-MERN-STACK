@@ -17,8 +17,6 @@ const EditUser  = () => {
       updatedAt : new Date()
     })
 
-    const token = JSON.parse(localStorage.userinfo).token
-
     const currentUser = async (authtoken: string) => {
       try {
         await axios
@@ -32,8 +30,8 @@ const EditUser  = () => {
               setName(response.data)
             }
           });
-      } catch (err: any) {
-        console.log(err.message)
+      } catch (err) {
+        console.log(err)
       }
     };
 
@@ -43,7 +41,7 @@ const EditUser  = () => {
 
     const onSubmit = async (event : ChangeEvent<HTMLFormElement>) => {
       try {
-        const authtoken = JSON.parse(localStorage.userinfo).token
+        const authtoken = localStorage.userinfo
         event.preventDefault()
         await axios.post(`${import.meta.env.VITE_API}/users/editUser`, {
           "_id" : userinfo._id,
@@ -54,7 +52,7 @@ const EditUser  = () => {
           }
         }).then((response) => {
           if(response.status == 200) {
-            currentUser(token)
+            currentUser(localStorage.userinfo)
           }
         })
       } catch (err) {
@@ -64,7 +62,7 @@ const EditUser  = () => {
 
     useEffect(() => {
       
-      currentUser(token)
+      currentUser(localStorage.userinfo)
     },[])
   return (
     <>

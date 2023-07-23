@@ -8,8 +8,6 @@ import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
-
 interface loginUser {
     email : string
     password : string
@@ -17,7 +15,6 @@ interface loginUser {
 
 
 const Login = () => {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [login, setLogin] = useState<loginUser>({
         email : '',
@@ -36,13 +33,7 @@ const Login = () => {
           
           if(response.status == 200) {
 
-            let dataUser = JSON.stringify({
-                "isLogin" : true,
-                "token" : response.data.token
-            })
-
-
-            localStorage.setItem("userinfo", dataUser)
+            localStorage.setItem("userinfo", response.data.token)
 
             toast.success(`เข้าสู่ระบบสำเร็จ`)
             

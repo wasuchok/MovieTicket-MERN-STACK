@@ -29,10 +29,18 @@ User.forEach((file) => {
   app.use("/api/users", route);
 });
 
+//moviesRoute
+const Movie = fs.readdirSync("./routes/movies")
+
+Movie.forEach((file) => {
+  const routeMovie = require(`./routes/movies/${file}`).default;
+  app.use("/api/movies", routeMovie);
+})
 
 
 
 
-app.listen(port, () => console.log(`Application is running on port ${port}`))
+
+app.listen(5000, () => console.log(`Application is running on port ${port}`))
 
 connection()

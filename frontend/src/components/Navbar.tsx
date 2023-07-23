@@ -17,7 +17,7 @@ const Navbar = () => {
   
   
   return (
-    <div className="navbar bg-blue-600 fixed top-0 w-full">
+    <div className="navbar bg-blue-600 fixed top-0 w-full drop-shadow-lg">
   <div className="flex-1 text-base-100">
     <Link to="/" className="btn btn-ghost normal-case text-xl">SF Movie</Link>
   </div>
@@ -25,7 +25,7 @@ const Navbar = () => {
     <div className="form-control">
       <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
     </div>
-    {!!userinfo.isLogin ? (
+    {!!userinfo.email ? (
     <div className="dropdown dropdown-end">
     <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
       <div className="w-10 rounded-full">
