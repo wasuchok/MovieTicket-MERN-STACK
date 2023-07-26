@@ -3,7 +3,7 @@ const router = Router()
 
 
 //users
-import { deleteUser, editUser, listUsers, readUser } from '../../controller/users'
+import { ChangeIsAdmin, deleteUser, editUser, listUsers, readUser } from '../../controller/users'
 
 //auth
 import { Auth, CheckAdmin, Login, currentUser, registerUser } from "../../controller/auth"
@@ -20,6 +20,8 @@ router.post('/editUser', Auth, editUser)
 router.post('/readUser', Auth, CheckAdmin, readUser)
 
 router.post('/deleteUser', Auth, CheckAdmin, deleteUser)
+
+router.post('/changeisAdmin', Auth, CheckAdmin, ChangeIsAdmin)
 
 
 //Auth

@@ -38,7 +38,7 @@ const ProtectedAdminRoute : React.FC<ProtectedTypes> = ({children}) => {
 
     }, [userinfo])
 
-    return auth ? children : <LoadingToRedirect />
+    return auth ? children : <LoadingToRedirect To="/login" Msg="คุณไม่มีสิทธิ์เข้าถึง" />
 }
 
 export default ProtectedAdminRoute

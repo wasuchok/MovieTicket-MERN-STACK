@@ -17,7 +17,7 @@ const Navbar = () => {
   
   
   return (
-    <div className="navbar bg-blue-600 fixed top-0 w-full drop-shadow-lg">
+    <div className="navbar bg-blue-600 fixed top-0 w-full drop-shadow-lg z-10">
   <div className="flex-1 text-base-100">
     <Link to="/" className="btn btn-ghost normal-case text-xl">SF Movie</Link>
   </div>
@@ -33,9 +33,16 @@ const Navbar = () => {
       </div>
     </label>
     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-      <li><Link to="/edituser">
+      <li>
+        <Link to="/edituser">
         Edit User
-      </Link></li>
+      </Link>
+      </li>
+      <li className={`${userinfo.isAdmin ? "" : "hidden"}`}>
+        <Link to="/admin">
+        Admin
+      </Link>
+      </li>
 
       <li><button onClick={Logout}>Logout</button></li>
     </ul>

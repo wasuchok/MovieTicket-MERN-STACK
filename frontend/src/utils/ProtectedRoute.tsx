@@ -1,19 +1,19 @@
-import { useSelector } from "react-redux"
-import LoadingToRedirect from "./LoadingToRedirect"
-import React from "react"
-import { RootState } from "../redux/store"
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
+
+import { useSelector } from 'react-redux'
+import { RootState } from '../redux/store'
+import LoadingToRedirect from './LoadingToRedirect'
 
 interface ProtectedTypes {
-  children : ReactNode
+    children : ReactNode
 }
 
-const ProtectedRoute : React.FC<ProtectedTypes> = ({ children }) => {
+const UserRoute : React.FC<ProtectedTypes> = ({ children }) => {
 
     const { userinfo } = useSelector((state : RootState) => (state.user))
 
 
-  return userinfo && localStorage.userinfo ? children : <LoadingToRedirect />
+  return userinfo && userinfo.email ? children : <LoadingToRedirect To="/login" Msg="คุณไม่มีสิทธิ์เข้าถึง" />
 }
 
-export default ProtectedRoute
+export default UserRoute

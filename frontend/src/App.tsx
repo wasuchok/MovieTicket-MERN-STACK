@@ -17,7 +17,8 @@ import EditUser from "./pages/Home/EditUser";
 
 //Pages Admin
 import AdminIndex from './pages/Admin/Index'
-import ManageUser from "./pages/Admin/ManageUser";
+import ManageUser from "./pages/Admin/ManageUsers";
+import ManageMovies from "./pages/Admin/ManageMovies";
 
 //Redux
 import { useDispatch } from "react-redux";
@@ -29,6 +30,7 @@ import { userLogin } from "./redux/slices/userSlice";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import ProtectedLogin from "./utils/ProtectedLogin";
 import ProtectedAdminRoute from "./utils/ProtectedAdminRoute";
+
 
 
 const App = () => {
@@ -49,7 +51,7 @@ const App = () => {
           }
         });
     } catch (err: any) {
-      if (err.response.data == "JWT Expired" && err.response.status == 500) {
+      if (err.response.data == "JWT Expired" || err.response.status == 500) {
         localStorage.removeItem("userinfo");
         dispatch(
           userLogin({
@@ -130,6 +132,18 @@ const App = () => {
                 <div className="flex">
                 <SidebarAdmin />
                 <ManageUser />
+                </div>
+              </ProtectedAdminRoute>
+            }
+          />
+
+          <Route
+            path="/admin/managemovies"
+            element={
+              <ProtectedAdminRoute>
+                <div className="flex">
+                <SidebarAdmin />
+                <ManageMovies />
                 </div>
               </ProtectedAdminRoute>
             }

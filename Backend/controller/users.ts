@@ -54,3 +54,16 @@ export const deleteUser = async (req : Request, res : Response) => {
     }
 }
 
+export const ChangeIsAdmin = async (req : Request, res : Response) => {
+    try {
+        const { _id } = req.body
+        let user = await userModel.findOneAndUpdate({ _id }, { isAdmin : req.body.isAdmin })
+        if(user) {
+            res.status(200).send(user)
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Server Error')
+    }
+}
+

@@ -4,6 +4,9 @@ import { useEffect, useState } from "react"
 import axios from 'axios'
 import { ChangeEvent } from "react"
 import moment from 'moment'
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 
 const EditUser  = () => {
@@ -30,8 +33,11 @@ const EditUser  = () => {
               setName(response.data)
             }
           });
-      } catch (err) {
-        console.log(err)
+      } catch (err : any) {
+        console.log(err.message)
+        if(err.message == "Network Error") {
+          toast.error('หลังบ้านมีปัญหา!')
+        }
       }
     };
 
@@ -53,10 +59,12 @@ const EditUser  = () => {
         }).then((response) => {
           if(response.status == 200) {
             currentUser(localStorage.userinfo)
+            toast.success('อัพเดพข้อมูลสำเร็จ')
           }
         })
       } catch (err) {
         console.log(err)
+        toast.error('หลังบ้านมีปัญหา!')
       }
     }
 
@@ -68,6 +76,7 @@ const EditUser  = () => {
     <>
 <div className=" mx-auto py-8">
   <h1 className="text-2xl flex justify-center mb-5 font-bold">แก้ไขข้อมูลส่วนตัว {userinfo.email}</h1>
+  <ToastContainer />
   <form className="max-w-sm mx-auto" onSubmit={onSubmit}>
 
   <div className="mb-4">
